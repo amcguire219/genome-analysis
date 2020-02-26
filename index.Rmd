@@ -10,10 +10,10 @@ bibliography: data/references.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-[Lab2](lab2_McGuire.html)
-[Lab3](lab3_McGuire.html)
-[Lab4](lab4_McGuire.html)
-[Lab5](lab5_McGuire.html)
+[Lab2](Lab2B_McGuire.html)
+[Lab3](Lab3_McGuire.html)
+[Lab4](Lab4_McGuire.html)
+[Lab5](Lab5_McGuire.html)
 
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
