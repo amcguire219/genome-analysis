@@ -1,0 +1,117 @@
+---
+title: "Lab 5"
+author: "Alexandra McGuire"
+date: "2/19/2020"
+output: html_document
+---
+```{r, eval=FALSE}
+ download.file(url="https://ndownloader.figshare.com/files/2292169",
+              destfile = "data/portal_data_joined.csv")
+```
+
+```{r}
+library(tidyverse)
+surveys <- read_csv("data/portal_data_joined.csv")
+SNPs <- read_tsv("data/23andMe_complete.txt", skip = 14, col_types = 
+  cols(chromosome = col_factor()))
+```
+Challenge 1
+```{r}
+filtered_survey <- surveys %>% 
+  filter(year < 1995) %>% 
+  select(year, sex, weight)
+filtered_survey
+```
+Challenge 2
+```{r}
+surveys_hindfoot_half <- surveys %>% 
+  filter(!is.na(hindfoot_length)) %>% 
+  mutate(hindfoot_half = hindfoot_length / 2) %>% 
+  filter(hindfoot_half < 30) %>% 
+  select(species_id, hindfoot_half)
+surveys_hindfoot_half
+```
+Challenge 3
+```{r}
+surveys %>% 
+  count(plot_type)
+
+surveys %>% 
+  filter(!is.na(hindfoot_length)) %>% 
+  group_by(species_id) %>% 
+  summarize(
+    mean_hindfoot = mean(hindfoot_length), 
+    min_hindfoot = min(hindfoot_length), 
+    max_hindfoot = max(hindfoot_length),
+    n = n()
+    )
+surveys %>% 
+  filter(!is.na(weight)) %>% 
+  group_by(year) %>% 
+  filter(weight == max(weight)) %>% 
+  select(year, genus, species_id, weight) %>% 
+  arrange(year)
+```
+Challenge 4
+```{r}
+surveys_spread <- surveys %>% 
+  group_by(plot_id, year) %>% 
+  summarize(n_genera = n_distinct(genus)) %>% 
+  spread(year, n_genera)
+head(surveys_spread)
+
+surveys_spread %>% 
+  gather(year, n_genera, -plot_id)
+
+surveys_gathered <- surveys %>% 
+  gather(measurement, value, hindfoot_length, weight)
+
+surveys_gathered %>% 
+  group_by(year, measurement, plot_type) %>% 
+  summarize(mean_value = mean(value, na.rm = TRUE)) %>% 
+  spread(measurement, mean_value)
+```
+
+### 1
+```{r}
+select(SNPs, position, genotype)
+```
+
+### 2
+```{r}
+MT_SNPs <- SNPs %>% 
+  filter(chromosome == "MT") %>% 
+  filter(!genotype == "A") %>% 
+  filter(!genotype == "T")
+MT_SNPs
+```
+
+### 3
+```{r}
+SNPs %>% 
+  group_by(chromosome) %>% 
+  summarize(min_pos = min(position), max_pos = max(position), count = n())
+```
+
+### 4
+```{r}
+SNPs %>% 
+  group_by(chromosome) %>% 
+  summarize(min_pos = min(position), max_pos = max(position), count = n()) %>% 
+  mutate(density = count/(max_pos - min_pos))
+```
+
+### 5
+```{r}
+final_SNPs <- SNPs %>% 
+  group_by(chromosome) %>% 
+  summarize(min_pos = min(position), max_pos = max(position), count = n()) %>% 
+  mutate(density = count/(max_pos - min_pos)) %>% 
+  arrange(density)
+final_SNPs
+```
+
+### 6
+```{r}
+write_csv(final_SNPs, path = "data/final_SNPs.csv")
+```
