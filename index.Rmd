@@ -1,0 +1,12 @@
+---
+title: "index"
+author: "Alexandra McGuire"
+date: "2/26/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+[Lab5](lab5_McGuire.html)
