@@ -1,0 +1,53 @@
+---
+title: "Lab 3"
+author: "Alexandra McGuire"
+date: "2/5/2020"
+output: html_document
+---
+### Exercises
+```{r}
+library(tidyverse)
+SNPs<- read.table("23andMe_complete.txt", header= TRUE, sep = "\t")
+```
+
+### 1
+```{r}
+ggplot(data = SNPs) +
+  geom_bar(mapping = aes(x = chromosome))
+```
+
+### 2
+```{r}
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplot(data = SNPs) +
+  geom_bar(mapping = aes(x = chromosome))
+```
+
+### 3
+```{r}
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplot(data = SNPs) +
+  geom_bar(mapping = aes(x = chromosome, fill = genotype))
+```
+
+### 4
+```{r}
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplot(data = SNPs) +
+  geom_bar(mapping = aes(x = chromosome, fill = genotype), position = "fill")
+```
+
+### 5
+```{r}
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplot(data = SNPs) +
+  geom_bar(mapping = aes(x = chromosome, fill = genotype), position = "dodge")
+```
+
+### 6
+```{r}
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplot(data = SNPs) +
+  geom_bar(mapping = aes(x = chromosome, fill = genotype), position = "dodge") +
+  facet_wrap(~ genotype, nrow = 2)
+```

@@ -1,0 +1,71 @@
+---
+title: "Lab 4"
+author: "Alexandra McGuire"
+date: "2/12/2020"
+output: html_document
+---
+```{r}
+library(ggplot2)
+SNPs<- read.table("23andMe_complete.txt", header= TRUE, sep = "\t")
+```
+
+### 1
+```{r}
+ex <- ggplot(data = SNPs) +
+  geom_bar(mapping = aes(x = chromosome), fill="blue")
+ex + ggtitle("Chromosome Count") +
+  xlab("Chromosome Number") +
+  ylab("Nucleotide Count")
+```
+
+### 2
+```{r}
+nt <- c("AA"="blue","AC"="blue","AG"="blue","AT"="blue","CC"="blue","CG"="blue","CT"="blue","GG"="blue","GT"="blue","TT"="blue","A"="red","G"="red","T"="red","C"="red","--"="yellow","D"="yellow","DD"="yellow","DI"="yellow","I"="yellow","II"="yellow")
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplot(data = SNPs) +
+  geom_bar(mapping = aes(x = chromosome, fill=genotype)) +
+             scale_fill_manual(values=nt) +
+             ggtitle("Chromosome Count by Genotype") +
+             xlab("Chromosome Number") +
+              ylab("Nucleotide Count by Genotype")
+```
+
+### 3
+```{r}
+ppi <- 300
+png("SNP_ex3.png", width=6*ppi, res=ppi)
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+SNP <- ggplot(data = SNPs) +
+  geom_bar(mapping = aes(x = chromosome, fill = genotype), position = "dodge")
+dev.off()
+```
+![Genotype counts per chromosome](SNP_ex3.png)
+
+### 4
+```{r}
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+wrap <- ggplot(data = SNPs) +
+  geom_bar(mapping = aes(x = chromosome, fill = genotype), position = "dodge") +
+  facet_wrap(~ genotype, ncol = 3)
+wrap + ggtitle("Genotype Frequencies on Chromosomes") +
+  xlab("Chromosome Number") +
+  ylab("Genotype Count")
+```
+
+### 5
+```{r}
+library(plotly)
+SNPs$chromosome = ordered(SNPs$chromosome, levels=c(seq(1, 22), "X", "Y", "MT"))
+ggplotly(
+  ggplot(data = SNPs) +
+    geom_bar(mapping = aes(x = chromosome, fill = genotype), position = "dodge") +
+    facet_wrap(~ genotype, nrow = 2)
+)
+```
+
+### 6
+```{r}
+YSNP <- subset(SNPs, chromosome=="Y")
+library(DT)
+datatable(YSNP)
+```
