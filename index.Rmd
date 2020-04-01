@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 [Lab4](Lab4_McGuire.html)
 [Lab5](Lab5_McGuire.html)
 [Lab9](McGuire_Lab9.html)
+[Lab10](Lab10_McGuire.html)
 
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
