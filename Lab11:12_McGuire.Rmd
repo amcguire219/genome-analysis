@@ -1,0 +1,19 @@
+---
+title: "Lab11/12"
+author: "Alexandra McGuire"
+date: "5/8/2020"
+output: html_document
+---
+
+Shiny Apps:
+Graph 1: 
+https://amcguire219.shinyapps.io/lab11-12-4/?_ga=2.225260890.1134254944.1588911205-969022343.1588911205
+
+Graph 2:
+https://amcguire219.shinyapps.io/lab11-12-2/?_ga=2.257781963.1134254944.1588911205-969022343.1588911205
+
+Graph 3:
+https://amcguire219.shinyapps.io/Lab11-12-3/?_ga=2.257781963.1134254944.1588911205-969022343.1588911205
+
+Graph 4:
+https://amcguire219.shinyapps.io/lab11-12-5/?_ga=2.257781963.1134254944.1588911205-969022343.1588911205
